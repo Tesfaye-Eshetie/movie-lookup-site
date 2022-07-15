@@ -4,7 +4,9 @@ const formTitle = document.getElementById('form-title');
 const formID = document.getElementById('form-ID');
 const title = document.getElementById('title');
 const IMDB_ID = document.getElementById('IMDB_ID');
-const displayMovie = document.querySelector('.display-movie');
+const plotTitle = document.getElementById('plot-title');
+const plotID = document.getElementById('plot-ID');
+const displayMovie = document.getElementById('display-movie');
 
 const baseURL = 'https://www.omdbapi.com/';
 
@@ -17,6 +19,8 @@ const setError = (element, message) => {
 };
 
 const setSuccess = (movie) => {
+  displayMovie.textContent = '';
+
   const divOne = document.createElement('div');
   const poster = document.createElement('img');
   poster.src = movie.Poster;
@@ -25,7 +29,7 @@ const setSuccess = (movie) => {
 
   const divTwo = document.createElement('div');
   const movieTitle = document.createElement('h2');
-  movieTitle.textContent = `Title : ${movie.Title}`;
+  movieTitle.textContent = movie.Title;
   divTwo.appendChild(movieTitle);
   const movieYear = document.createElement('h4');
   movieYear.textContent = `Year: ${movie.Year}`;
@@ -33,6 +37,12 @@ const setSuccess = (movie) => {
   const movieRelased = document.createElement('p');
   movieRelased.textContent = `Released Date: ${movie.Released}`;
   divTwo.appendChild(movieRelased);
+  const moviePlot = document.createElement('p');
+  moviePlot.textContent = `Plot: ${movie.Plot}`;
+  divTwo.appendChild(moviePlot);
+
+  divOne.classList.add('div-flex');
+  divTwo.classList.add('div-flex');
 
   displayMovie.appendChild(divOne);
   displayMovie.appendChild(divTwo);
@@ -49,9 +59,10 @@ formTitle.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const searchTerm = title.value.trim();
+  const plotValue = plotTitle.value;
 
   if (searchTerm && searchTerm !== '') {
-    getMovie(`${baseURL}?t=${searchTerm}&apikey=${APIKey}`);
+    getMovie(`${baseURL}?t=${searchTerm}&plot=${plotValue}&apikey=${APIKey}`);
     title.value = '';
   } else {
     setError(title, 'Title is required...');
@@ -62,9 +73,10 @@ formID.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const searchTerm = IMDB_ID.value.trim();
+  const plotValue = plotID.value;
 
   if (searchTerm && searchTerm !== '') {
-    getMovie(`${baseURL}?i=${searchTerm}&apikey=${APIKey}`);
+    getMovie(`${baseURL}?i=${searchTerm}&plot=${plotValue}&apikey=${APIKey}`);
     IMDB_ID.value = '';
   } else {
     setError(IMDB_ID, 'IMDB_ID is required...');
