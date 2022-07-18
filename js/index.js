@@ -55,7 +55,7 @@ const setValue = (movie) => {
   const movieTitle = document.createElement('h2');
   movieTitle.textContent = movie.Title;
   divTwo.appendChild(movieTitle);
-  const movieYear = document.createElement('h4');
+  const movieYear = document.createElement('h3');
   movieYear.textContent = `Year: ${movie.Year}`;
   divTwo.appendChild(movieYear);
 
@@ -106,11 +106,23 @@ const setValue = (movie) => {
   divTwo.appendChild(divRating);
 
   const movieRelased = document.createElement('p');
-  movieRelased.textContent = `Released Date: ${movie.Released}`;
+  const spanDate1 = document.createElement('span');
+  spanDate1.classList.add('span-flex');
+  spanDate1.textContent = 'Released Date: ';
+  movieRelased.appendChild(spanDate1);
+  const spanDate2 = document.createElement('span');
+  spanDate2.textContent = movie.Released;
+  movieRelased.appendChild(spanDate2);
   divTwo.appendChild(movieRelased);
 
   const moviePlot = document.createElement('p');
-  moviePlot.textContent = `Plot: ${movie.Plot}`;
+  const spanPlot1 = document.createElement('span');
+  spanPlot1.classList.add('span-flex');
+  spanPlot1.textContent = 'Plot: ';
+  moviePlot.appendChild(spanPlot1);
+  const spanPlot2 = document.createElement('span');
+  spanPlot2.textContent = movie.Plot;
+  moviePlot.appendChild(spanPlot2);
   divTwo.appendChild(moviePlot);
 
   divOne.classList.add('div-flex');

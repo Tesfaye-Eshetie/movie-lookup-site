@@ -211,8 +211,18 @@ select > option {
   text-align: center;
   text-transform:uppercase;
 }
-.card span {
+.card ul {
+  margin: .8rem;
+}
+.card ul li {
+  list-style: none;
+  line-height: 1.4rem;
+  padding-left: 1rem;
+}
+
+.card .span-flex {
   font-weight: var(--fw-bold);
+  font-size: 1.2rem;
 }
 .no-response {
   display: flex;
