@@ -63,27 +63,52 @@ const setValue = (movie) => {
   const ratings = document.createElement('h3');
   divRating.appendChild(ratings);
 
-  if (movie.Rated !== 'R') {
-    ratings.textContent = "This Movie didn't Rated";
-  } else {
+  if (movie.Ratings.length === 3) {
     ratings.textContent = 'Ratings values from various sources';
     const ul = document.createElement('ul');
     const liOne = document.createElement('li');
     liOne.textContent = `${movie.Ratings[0].Source} : ${movie.Ratings[0].Value}`;
+    ul.appendChild(liOne);
+
     const liTwo = document.createElement('li');
     liTwo.textContent = `${movie.Ratings[1].Source} : ${movie.Ratings[1].Value}`;
+    ul.appendChild(liTwo);
+
     const liThree = document.createElement('li');
     liThree.textContent = `${movie.Ratings[2].Source} : ${movie.Ratings[2].Value}`;
-    ul.appendChild(liOne);
-    ul.appendChild(liTwo);
     ul.appendChild(liThree);
+
     divRating.appendChild(ul);
+  } else if (movie.Ratings.length === 2) {
+    ratings.textContent = 'Ratings values from various sources';
+    const ul = document.createElement('ul');
+    const liOne = document.createElement('li');
+    liOne.textContent = `${movie.Ratings[0].Source} : ${movie.Ratings[0].Value}`;
+    ul.appendChild(liOne);
+
+    const liTwo = document.createElement('li');
+    liTwo.textContent = `${movie.Ratings[1].Source} : ${movie.Ratings[1].Value}`;
+    ul.appendChild(liTwo);
+
+    divRating.appendChild(ul);
+  } else if (movie.Ratings.length === 1) {
+    ratings.textContent = 'Ratings values from various sources';
+    const ul = document.createElement('ul');
+    const liOne = document.createElement('li');
+    liOne.textContent = `${movie.Ratings[0].Source} : ${movie.Ratings[0].Value}`;
+    ul.appendChild(liOne);
+
+    divRating.appendChild(ul);
+  } else {
+    ratings.textContent = "This Movie didn't Rated";
   }
+
   divTwo.appendChild(divRating);
 
   const movieRelased = document.createElement('p');
   movieRelased.textContent = `Released Date: ${movie.Released}`;
   divTwo.appendChild(movieRelased);
+
   const moviePlot = document.createElement('p');
   moviePlot.textContent = `Plot: ${movie.Plot}`;
   divTwo.appendChild(moviePlot);
