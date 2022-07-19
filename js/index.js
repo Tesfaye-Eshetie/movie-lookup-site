@@ -1,17 +1,21 @@
 import APIKey from './api-key';
 
-const formTitle = document.getElementById('form-title');
-const formID = document.getElementById('form-ID');
-const title = document.getElementById('title');
-const year = document.getElementById('year');
-const IMDB_ID = document.getElementById('IMDB_ID');
-const plotTitle = document.getElementById('plot-title');
-const plotID = document.getElementById('plot-ID');
-const displayMovie = document.getElementById('display-movie');
-
 const baseURL = 'https://www.omdbapi.com/';
 
+const formTitle = document.getElementById('form-title');
+const title = document.getElementById('title');
+const year = document.getElementById('year');
+const plotTitle = document.getElementById('plot-title');
+
+const formID = document.getElementById('form-ID');
+const IMDB_ID = document.getElementById('IMDB_ID');
+const plotID = document.getElementById('plot-ID');
+
+const displayMovie = document.getElementById('display-movie');
+
 const setError = (element, message) => {
+  displayMovie.textContent = '';
+
   const inputControl = element.parentElement;
   // eslint-disable-next-line no-param-reassign
   element.placeholder = message;
