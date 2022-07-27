@@ -67,44 +67,13 @@ const setValue = (movie) => {
   const ratings = document.createElement('h3');
   divRating.appendChild(ratings);
 
-  if (movie.Ratings.length === 3) {
+  for (let i = 0; i < movie.Ratings.length; i++) {
     ratings.textContent = 'Ratings values from various sources';
     const ul = document.createElement('ul');
-    const liOne = document.createElement('li');
-    liOne.textContent = `${movie.Ratings[0].Source} : ${movie.Ratings[0].Value}`;
-    ul.appendChild(liOne);
-
-    const liTwo = document.createElement('li');
-    liTwo.textContent = `${movie.Ratings[1].Source} : ${movie.Ratings[1].Value}`;
-    ul.appendChild(liTwo);
-
-    const liThree = document.createElement('li');
-    liThree.textContent = `${movie.Ratings[2].Source} : ${movie.Ratings[2].Value}`;
-    ul.appendChild(liThree);
-
+    const li = document.createElement('li');
+    li.textContent = `${movie.Ratings[i].Source} : ${movie.Ratings[i].Value}`;
+    ul.appendChild(li);
     divRating.appendChild(ul);
-  } else if (movie.Ratings.length === 2) {
-    ratings.textContent = 'Ratings values from various sources';
-    const ul = document.createElement('ul');
-    const liOne = document.createElement('li');
-    liOne.textContent = `${movie.Ratings[0].Source} : ${movie.Ratings[0].Value}`;
-    ul.appendChild(liOne);
-
-    const liTwo = document.createElement('li');
-    liTwo.textContent = `${movie.Ratings[1].Source} : ${movie.Ratings[1].Value}`;
-    ul.appendChild(liTwo);
-
-    divRating.appendChild(ul);
-  } else if (movie.Ratings.length === 1) {
-    ratings.textContent = 'Ratings values from various sources';
-    const ul = document.createElement('ul');
-    const liOne = document.createElement('li');
-    liOne.textContent = `${movie.Ratings[0].Source} : ${movie.Ratings[0].Value}`;
-    ul.appendChild(liOne);
-
-    divRating.appendChild(ul);
-  } else {
-    ratings.textContent = "This Movie didn't Rated";
   }
 
   divTwo.appendChild(divRating);
