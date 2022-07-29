@@ -58,17 +58,15 @@ const setValue = (movie) => {
   const divTwo = document.createElement('div');
   const movieTitle = document.createElement('h2');
   movieTitle.textContent = movie.Title;
-  divTwo.appendChild(movieTitle);
   const movieYear = document.createElement('h3');
   movieYear.textContent = `Year: ${movie.Year}`;
-  divTwo.appendChild(movieYear);
 
   const divRating = document.createElement('div');
   const ratings = document.createElement('h3');
+  ratings.textContent = 'Ratings values from various sources';
   divRating.appendChild(ratings);
 
   for (let i = 0; i < movie.Ratings.length; i++) {
-    ratings.textContent = 'Ratings values from various sources';
     const ul = document.createElement('ul');
     const li = document.createElement('li');
     li.textContent = `${movie.Ratings[i].Source} : ${movie.Ratings[i].Value}`;
@@ -76,33 +74,28 @@ const setValue = (movie) => {
     divRating.appendChild(ul);
   }
 
-  divTwo.appendChild(divRating);
-
   const movieRelased = document.createElement('p');
   const spanDate1 = document.createElement('span');
   spanDate1.classList.add('span-flex');
   spanDate1.textContent = 'Released Date: ';
-  movieRelased.appendChild(spanDate1);
   const spanDate2 = document.createElement('span');
   spanDate2.textContent = movie.Released;
-  movieRelased.appendChild(spanDate2);
-  divTwo.appendChild(movieRelased);
+  movieRelased.append(spanDate1, spanDate2);
 
   const moviePlot = document.createElement('p');
   const spanPlot1 = document.createElement('span');
   spanPlot1.classList.add('span-flex');
   spanPlot1.textContent = 'Plot: ';
-  moviePlot.appendChild(spanPlot1);
   const spanPlot2 = document.createElement('span');
   spanPlot2.textContent = movie.Plot;
-  moviePlot.appendChild(spanPlot2);
-  divTwo.appendChild(moviePlot);
+  moviePlot.append(spanPlot1, spanPlot2);
+
+  divTwo.append(movieTitle, movieYear, divRating, movieRelased, moviePlot);
 
   divOne.classList.add('div-flex');
   divTwo.classList.add('div-flex');
 
-  card.appendChild(divOne);
-  card.appendChild(divTwo);
+  card.append(divOne, divTwo);
 
   displayMovie.appendChild(card);
 };
