@@ -1,4 +1,7 @@
 import APIKey from './api-key';
+import displayMovie from './movie-component/displayMovie';
+
+window.customElements.define('display-movie', displayMovie);
 
 const baseURL = 'https://www.omdbapi.com/';
 
@@ -11,7 +14,7 @@ const formID = document.getElementById('form-ID');
 const IMDB_ID = document.getElementById('IMDB_ID');
 const plotID = document.getElementById('plot-ID');
 
-const displayMovie = document.getElementById('display-movie');
+const movieDisplay = document.getElementById('display');
 
 const setError = (element, message) => {
   displayMovie.textContent = '';
@@ -31,7 +34,7 @@ const setSuccess = (element) => {
 };
 
 const setNoResult = () => {
-  displayMovie.textContent = '';
+  movieDisplay.textContent = '';
 
   const divNo = document.createElement('div');
   divNo.classList.add('no-response');
@@ -40,64 +43,7 @@ const setNoResult = () => {
     'Sorry, no results were found using your input. Please try a different search.';
 
   divNo.appendChild(noResponse);
-  displayMovie.appendChild(divNo);
-};
-
-const setValue = (movie) => {
-  displayMovie.textContent = '';
-
-  const card = document.createElement('div');
-  card.classList.add('card');
-
-  const divOne = document.createElement('div');
-  const poster = document.createElement('img');
-  poster.src = movie.Poster;
-  poster.alt = `${movie.Title} poster`;
-  divOne.appendChild(poster);
-
-  const divTwo = document.createElement('div');
-  const movieTitle = document.createElement('h2');
-  movieTitle.textContent = movie.Title;
-  const movieYear = document.createElement('h3');
-  movieYear.textContent = `Year: ${movie.Year}`;
-
-  const divRating = document.createElement('div');
-  const ratings = document.createElement('h3');
-  ratings.textContent = 'Ratings values from various sources';
-  divRating.appendChild(ratings);
-
-  for (let i = 0; i < movie.Ratings.length; i++) {
-    const ul = document.createElement('ul');
-    const li = document.createElement('li');
-    li.textContent = `${movie.Ratings[i].Source} : ${movie.Ratings[i].Value}`;
-    ul.appendChild(li);
-    divRating.appendChild(ul);
-  }
-
-  const movieRelased = document.createElement('p');
-  const spanDate1 = document.createElement('span');
-  spanDate1.classList.add('span-flex');
-  spanDate1.textContent = 'Released Date: ';
-  const spanDate2 = document.createElement('span');
-  spanDate2.textContent = movie.Released;
-  movieRelased.append(spanDate1, spanDate2);
-
-  const moviePlot = document.createElement('p');
-  const spanPlot1 = document.createElement('span');
-  spanPlot1.classList.add('span-flex');
-  spanPlot1.textContent = 'Plot: ';
-  const spanPlot2 = document.createElement('span');
-  spanPlot2.textContent = movie.Plot;
-  moviePlot.append(spanPlot1, spanPlot2);
-
-  divTwo.append(movieTitle, movieYear, divRating, movieRelased, moviePlot);
-
-  divOne.classList.add('div-flex');
-  divTwo.classList.add('div-flex');
-
-  card.append(divOne, divTwo);
-
-  displayMovie.appendChild(card);
+  movieDisplay.appendChild(divNo);
 };
 
 const getMovie = async (url) => {
@@ -109,7 +55,20 @@ const getMovie = async (url) => {
     if (data.Response === 'False') {
       setNoResult();
     } else {
-      setValue(data);
+      const movie = document.createElement('display-movie');
+      movie.setAttribute('poster', data.Poster);
+      movie.setAttribute('title', data.Title);
+      movie.setAttribute('year', data.Year);
+      for (let i = 0; i < data.Ratings.length; i++) {
+        const x = 'rating_';
+        movie.setAttribute(
+          x + i,
+          `${data.Ratings[i].Source} : ${data.Ratings[i].Value}`
+        );
+      }
+      movie.setAttribute('date', data.Released);
+      movie.setAttribute('plot', data.Plot);
+      movieDisplay.appendChild(movie);
     }
   } catch (error) {
     console.log(error.message);

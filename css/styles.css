@@ -175,7 +175,7 @@ select > option {
   );
 }
 
-.card {
+/* .card {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -221,7 +221,7 @@ select > option {
 .card .span-flex {
   font-weight: var(--fw-bold);
   font-size: 1.2rem;
-}
+} */
 .no-response {
   display: flex;
   justify-content: space-evenly;
