@@ -6,10 +6,9 @@ template.innerHTML = `
       justify-content: space-evenly;
       align-items: center;
       width: 80vw;
-      margin: 1rem auto;
-      border: 1px solid var(--clr-dark);
       border-radius: 2rem;
-      box-shadow: -1px -1px 1px var(--clr-dark);
+      background-color: #fff;
+      font-size: 1rem;
     }
     .card .div-flex {
       min-height: 20rem;
@@ -24,19 +23,26 @@ template.innerHTML = `
     }
     .card img {
       border-radius: 1rem;
-      box-shadow: 2px 2px var(--clr-dark);
+      box-shadow: 2px 2px #17173b;
       margin: 1rem .5rem;
       object-fit: cover;
       align-self: center;
     }
     .card h2 {
-      font-weight: var(--fw-black);
-      margin-bottom: 1rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
       text-align: center;
       text-transform:uppercase;
+      font-size: 1.4rem;
+    }
+    .card h3 {
+      margin: .2rem 0;
     }
     .card ul {
-      margin: .8rem;
+      margin: .5rem;
+    }
+    .card p {
+      margin: .2rem 0;
     }
     .card ul li {
       list-style: none;
@@ -45,9 +51,16 @@ template.innerHTML = `
     }
     
     .card .span-flex {
-      font-weight: var(--fw-bold);
-      font-size: 1.2rem;
+      font-weight: 700;
+      font-size: 1rem;
     }
+   
+    @media (max-width: 50rem) {
+    .card {
+      flex-direction: column;
+    }
+    }
+    
   </style>
   <div class="card" >
     <div class="div-flex">
@@ -65,7 +78,6 @@ template.innerHTML = `
         </ul>
       </div>
       <p><span class="span-flex">Released Date: </span><span id="date"></span></p>
-      <p><span class="span-flex">Plot:  </span><span id="plot"></span></p>
     </div>
   </div>`;
 
@@ -92,8 +104,9 @@ class displayMovie extends HTMLElement {
       this.getAttribute('rating_2');
     this.shadowRoot.querySelector('#date').textContent =
       this.getAttribute('date');
-    this.shadowRoot.querySelector('#plot').textContent =
-      this.getAttribute('plot');
+    this.shadowRoot
+      .querySelector('#addFav')
+      .addEventListener('click', this.getAttribute('addFav'));
   }
 }
 
