@@ -1,7 +1,7 @@
 import { APIKey } from './api-key';
 import { setError, setSuccess, setNoResult } from './formValidation';
 import { store } from './idb/store';
-import { getSearchMovie, setFavMovie, getFavMovie } from './idb/indexedDB';
+import { getSearchMovie } from './idb/indexedDB';
 
 const baseURL = 'https://www.omdbapi.com/';
 const formTitle = document.getElementById('form-title');

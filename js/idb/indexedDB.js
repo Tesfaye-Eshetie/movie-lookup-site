@@ -66,18 +66,20 @@ const createNoteInput = (div) => {
 
   const textarea = document.createElement('textarea');
   textarea.placeholder = 'Note about the movie...';
+
+  const pNote = document.createElement('p');
+  pNote.classList.add('display-none');
+
   const bntNote = document.createElement('button');
   bntNote.textContent = 'Add Note';
 
   bntNote.addEventListener('click', (e) => {
     const element = e.target;
-    const InputElem = element.previousElementSibling;
-    const pNote = document.createElement('p');
+    const InputElem = element.previousElementSibling.previousElementSibling;
+
     if (element.textContent === 'Add Note') {
       if (InputElem.value) {
-        pNote.textContent = InputElem.value;
-        pNote.classList.add('display-none');
-        noteDiv.appendChild(pNote);
+        pNote.innerHTML = `<span>User Note: </span> ${InputElem.value}`;
         InputElem.classList.add('display-none');
         element.textContent = 'View Note';
       } else {
@@ -88,11 +90,12 @@ const createNoteInput = (div) => {
       pNote.classList.remove('display-none');
       element.textContent = 'Edit Note';
     } else {
-      InputElem.classList.add('display-none');
+      InputElem.classList.remove('display-none');
+      pNote.classList.add('display-none');
       element.textContent = 'Add Note';
     }
   });
-  noteDiv.append(textarea, bntNote);
+  noteDiv.append(textarea, pNote, bntNote);
   div.append(noteDiv);
 };
 
@@ -110,7 +113,6 @@ export const getSearchMovie = async (con) => {
 
       con.append(displayDiv);
     }
-    console.log(data);
   });
   db.close();
 };
@@ -125,7 +127,7 @@ export async function getFavMovie(con) {
         displayDiv.classList.add('display-div');
 
         createMovieDisplay(displayDiv, res[i].data);
-        createNoteInput(displayDiv);
+        // createNoteInput(displayDiv);
         removeFav(displayDiv);
 
         con.append(displayDiv);

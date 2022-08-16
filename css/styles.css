@@ -193,12 +193,16 @@ select > option {
   border-radius: 2rem;
   border: 1px solid #17173b;
 }
+.display-div button {
+  margin: 0;
+}
 .display-div .fav-button {
   margin: 2rem;
 }
 .display-note {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 1.5rem;
   margin: 1.5rem auto;
 }
@@ -210,7 +214,13 @@ select > option {
   font-size: 12px;
   padding: 10px;
   width: 32rem;
-  visibility: visible;
+}
+.display-note p {
+  max-width: 24rem;
+}
+.display-note p span {
+  font-weight: 700;
+  font-size: 1rem;
 }
 .display-note .red-input {
   border: #ff3860 solid 1px;
@@ -219,7 +229,7 @@ select > option {
   color: #ff3860;
 }
 .display-note .display-none {
-  visibility: hidden;
+  display: none;
 }
 .red-button {
   background-color: #ff3860;
@@ -235,9 +245,9 @@ select > option {
     flex-direction: column;
   }
   .form {
-  width: 80vw;
-}
-.display-note textarea {
-  width: 18rem;
-}
+    width: 80vw;
+  }
+  .display-note textarea {
+    width: 18rem;
+  }
 }
