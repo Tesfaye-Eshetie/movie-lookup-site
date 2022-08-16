@@ -104,9 +104,6 @@ class displayMovie extends HTMLElement {
       this.getAttribute('rating_2');
     this.shadowRoot.querySelector('#date').textContent =
       this.getAttribute('date');
-    this.shadowRoot
-      .querySelector('#addFav')
-      .addEventListener('click', this.getAttribute('addFav'));
   }
 }
 

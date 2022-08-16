@@ -188,10 +188,13 @@ select > option {
 }
 .display-div {
   margin: 1rem auto;
-  padding: 1rem;
+  padding: 1rem 0;
   background-color: #fff;
   border-radius: 2rem;
   border: 1px solid #17173b;
+}
+.display-div .fav-button {
+  margin: 2rem;
 }
 .display-note {
   display: flex;
@@ -207,6 +210,7 @@ select > option {
   font-size: 12px;
   padding: 10px;
   width: 32rem;
+  visibility: visible;
 }
 .display-note .red-input {
   border: #ff3860 solid 1px;
@@ -214,6 +218,14 @@ select > option {
 .display-note .red-input::placeholder {
   color: #ff3860;
 }
+.display-note .display-none {
+  visibility: hidden;
+}
+.red-button {
+  background-color: #ff3860;
+  border-color: #ff3860;
+}
+
 @media (max-width: 50rem) {
   #header h1 {
     font-size: 2rem;

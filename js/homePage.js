@@ -17,13 +17,6 @@ const showMovies = (movies) => {
     const movieEl = document.createElement('div');
     movieEl.classList.add('movie');
 
-    // movieEl.setAttribute('poster', IMG_PATH + movie.poster_path);
-    // movieEl.setAttribute('alt', movie.title);
-    // movieEl.setAttribute('title', movie.title);
-    // movieEl.setAttribute('rating', movie.vote_average);
-    // movieEl.setAttribute('class', getClassByRate(movie.vote_average));
-    // movieEl.setAttribute('overview', movie.overview);
-
     movieEl.innerHTML = `
           <img src="${IMG_PATH + movie.poster_path}" alt="${movie.title}">
           <div class="movie-info">

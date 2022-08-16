@@ -32,16 +32,32 @@ const createMovieDisplay = (div, data) => {
 const createFavButton = (div, data) => {
   const bntFav = document.createElement('button');
   bntFav.textContent = 'add to fav';
+  bntFav.classList.add('fav-button');
   bntFav.addEventListener('click', ({ target }) => {
     if (target.textContent === 'add to fav') {
       setFavMovie(data);
       bntFav.textContent = 'Remove from fav';
+      bntFav.classList.add('red-button');
     } else {
       bntFav.textContent = 'add to fav';
+      bntFav.classList.remove('red-button');
     }
   });
 
   div.append(bntFav);
+};
+const removeFav = (div) => {
+  const bntFav = document.createElement('button');
+  bntFav.textContent = 'Remove from fav';
+  bntFav.classList.add('red-button');
+  bntFav.classList.add('fav-button');
+  div.append(bntFav);
+
+  bntFav.addEventListener('click', ({ target }) => {
+    const element = target;
+    const favMovie = element.parentElement;
+    favMovie.remove();
+  });
 };
 
 const createNoteInput = (div) => {
@@ -55,23 +71,24 @@ const createNoteInput = (div) => {
 
   bntNote.addEventListener('click', (e) => {
     const element = e.target;
+    const InputElem = element.previousElementSibling;
     const pNote = document.createElement('p');
     if (element.textContent === 'Add Note') {
-      const InputElem = element.previousElementSibling;
       if (InputElem.value) {
         pNote.textContent = InputElem.value;
         pNote.classList.add('display-none');
         noteDiv.appendChild(pNote);
-        InputElem.remove();
+        InputElem.classList.add('display-none');
         element.textContent = 'View Note';
       } else {
         InputElem.placeholder = 'Input is missing?';
         InputElem.classList.add('red-input');
       }
     } else if (element.textContent === 'View Note') {
-      pNote.classList.add('display-block');
+      pNote.classList.remove('display-none');
       element.textContent = 'Edit Note';
     } else {
+      InputElem.classList.add('display-none');
       element.textContent = 'Add Note';
     }
   });
@@ -104,30 +121,16 @@ export async function getFavMovie(con) {
     if (res.length) {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < res.length; i++) {
-        const movie = document.createElement('display-movie');
-        movie.setAttribute('poster', res[i].data.Poster);
-        movie.setAttribute('title', res[i].data.Title);
-        movie.setAttribute('year', res[i].data.Year);
-        for (let j = 0; j < res[i].data.Ratings.length; j++) {
-          const x = 'rating_';
-          movie.setAttribute(
-            x + j,
-            `${res[i].data.Ratings[j].Source} : ${res[i].data.Ratings[j].Value}`
-          );
-        }
-        movie.setAttribute('date', res[i].data.Released);
+        const displayDiv = document.createElement('div');
+        displayDiv.classList.add('display-div');
 
-        const bntFav = document.createElement('button');
+        createMovieDisplay(displayDiv, res[i].data);
+        createNoteInput(displayDiv);
+        removeFav(displayDiv);
 
-        bntFav.textContent = 'Remove from fav';
-        bntFav.addEventListener('click', () => {
-          // setFavMovie(data);
-        });
-
-        con.append(movie);
+        con.append(displayDiv);
       }
     }
-    console.log(res);
   });
   db.close();
 }
