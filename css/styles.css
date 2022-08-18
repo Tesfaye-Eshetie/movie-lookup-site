@@ -201,6 +201,7 @@ select > option {
 }
 .display-note {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
@@ -216,7 +217,8 @@ select > option {
   width: 32rem;
 }
 .display-note p {
-  max-width: 24rem;
+  max-width: 32rem;
+  text-align: justify;
 }
 .display-note p span {
   font-weight: 700;
@@ -247,7 +249,7 @@ select > option {
   .form {
     width: 80vw;
   }
-  .display-note textarea {
+  .display-note textarea, .display-note p {
     width: 18rem;
   }
 }

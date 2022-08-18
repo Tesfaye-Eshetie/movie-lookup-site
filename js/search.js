@@ -1,7 +1,6 @@
 import { APIKey } from './api-key';
 import { setError, setSuccess, setNoResult } from './formValidation';
-import { store } from './idb/store';
-import { getSearchMovie } from './idb/indexedDB';
+import { getSearchMovie, setSearchMovie } from './idb/indexedDB';
 
 const baseURL = 'https://www.omdbapi.com/';
 const formTitle = document.getElementById('form-title');
@@ -24,7 +23,10 @@ const getMovie = async (url) => {
     if (data.Response === 'False') {
       setNoResult();
     } else {
-      store.set('search', data);
+      setSearchMovie('search', data);
+      setSearchMovie('comments', '');
+      // eslint-disable-next-line no-restricted-globals
+      location.reload();
     }
   } catch (error) {
     console.log(error.message);

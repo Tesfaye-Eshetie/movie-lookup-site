@@ -3,14 +3,20 @@ import { openDB } from 'idb';
 export const database = openDB('myDB', 1, {
   upgrade(db) {
     db.createObjectStore('searchMovie');
-    db.createObjectStore('favorite_movie', { autoIncrement: true });
+    db.createObjectStore('favoriteMovie');
   },
 });
 
-export async function setFavMovie(data) {
-  const db = await openDB('myDB', 1);
-  db.put('favorite_movie', { data });
-  db.close();
+export async function setSearchMovie(key, data) {
+  return (await database).put('searchMovie', { data }, key);
+}
+
+export async function setFavMovie(key, data) {
+  return (await database).put('favoriteMovie', { data }, key);
+}
+
+export async function getComments(key) {
+  return (await database).get('searchMovie', key);
 }
 
 const createMovieDisplay = (div, data) => {
@@ -29,13 +35,14 @@ const createMovieDisplay = (div, data) => {
   movie.setAttribute('date', data.Released);
   div.append(movie);
 };
+
 const createFavButton = (div, data) => {
   const bntFav = document.createElement('button');
   bntFav.textContent = 'add to fav';
   bntFav.classList.add('fav-button');
   bntFav.addEventListener('click', ({ target }) => {
     if (target.textContent === 'add to fav') {
-      setFavMovie(data);
+      setFavMovie(data.imdbID, data);
       bntFav.textContent = 'Remove from fav';
       bntFav.classList.add('red-button');
     } else {
@@ -46,17 +53,19 @@ const createFavButton = (div, data) => {
 
   div.append(bntFav);
 };
-const removeFav = (div) => {
+
+const removeFav = (div, key) => {
   const bntFav = document.createElement('button');
   bntFav.textContent = 'Remove from fav';
   bntFav.classList.add('red-button');
   bntFav.classList.add('fav-button');
   div.append(bntFav);
 
-  bntFav.addEventListener('click', ({ target }) => {
-    const element = target;
-    const favMovie = element.parentElement;
-    favMovie.remove();
+  bntFav.addEventListener('click', async () => {
+    (await database).delete('favoriteMovie', key);
+
+    // eslint-disable-next-line no-restricted-globals
+    location.reload();
   });
 };
 
@@ -66,43 +75,54 @@ const createNoteInput = (div) => {
 
   const textarea = document.createElement('textarea');
   textarea.placeholder = 'Note about the movie...';
+  textarea.classList.add('display-none');
 
-  const pNote = document.createElement('p');
-  pNote.classList.add('display-none');
+  const comments = document.createElement('p');
+  comments.classList.add('display-none');
 
   const bntNote = document.createElement('button');
-  bntNote.textContent = 'Add Note';
+
+  getComments('comments').then(({ data }) => {
+    if (data) {
+      comments.innerHTML = `<span> Comments: </span> ${data}`;
+      textarea.value = data;
+      bntNote.textContent = 'View Note';
+    } else {
+      bntNote.textContent = 'Add Note';
+      textarea.classList.remove('display-none');
+    }
+  });
 
   bntNote.addEventListener('click', (e) => {
     const element = e.target;
     const InputElem = element.previousElementSibling.previousElementSibling;
-
+    const InputValue = InputElem.value;
     if (element.textContent === 'Add Note') {
-      if (InputElem.value) {
-        pNote.innerHTML = `<span>User Note: </span> ${InputElem.value}`;
+      if (InputValue) {
+        setSearchMovie('comments', InputValue);
         InputElem.classList.add('display-none');
         element.textContent = 'View Note';
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
       } else {
         InputElem.placeholder = 'Input is missing?';
         InputElem.classList.add('red-input');
       }
     } else if (element.textContent === 'View Note') {
-      pNote.classList.remove('display-none');
+      comments.classList.remove('display-none');
       element.textContent = 'Edit Note';
     } else {
       InputElem.classList.remove('display-none');
-      pNote.classList.add('display-none');
+      comments.classList.add('display-none');
       element.textContent = 'Add Note';
     }
   });
-  noteDiv.append(textarea, pNote, bntNote);
+  noteDiv.append(textarea, comments, bntNote);
   div.append(noteDiv);
 };
 
 export const getSearchMovie = async (con) => {
-  const db = await openDB('myDB', 1);
-  db.get('searchMovie', 'search').then(({ search }) => {
-    const data = search;
+  (await database).get('searchMovie', 'search').then(({ data }) => {
     if (data) {
       const displayDiv = document.createElement('div');
       displayDiv.classList.add('display-div');
@@ -114,25 +134,22 @@ export const getSearchMovie = async (con) => {
       con.append(displayDiv);
     }
   });
-  db.close();
 };
 
 export async function getFavMovie(con) {
-  const db = await openDB('myDB', 1);
-  db.getAll('favorite_movie').then((res) => {
+  (await database).getAll('favoriteMovie').then((res) => {
     if (res.length) {
       // eslint-disable-next-line no-plusplus
       for (let i = 0; i < res.length; i++) {
         const displayDiv = document.createElement('div');
         displayDiv.classList.add('display-div');
+        console.log(res[i]);
 
         createMovieDisplay(displayDiv, res[i].data);
-        // createNoteInput(displayDiv);
-        removeFav(displayDiv);
+        removeFav(displayDiv, res[i].data.imdbID);
 
         con.append(displayDiv);
       }
     }
   });
-  db.close();
 }
