@@ -23,8 +23,9 @@ const getMovie = async (url) => {
     if (data.Response === 'False') {
       setNoResult();
     } else {
-      setSearchMovie('search', data);
       setSearchMovie('comments', '');
+      setSearchMovie('search', data);
+
       // eslint-disable-next-line no-restricted-globals
       location.reload();
     }

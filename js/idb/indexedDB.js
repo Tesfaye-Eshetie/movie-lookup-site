@@ -81,14 +81,17 @@ const createNoteInput = (div) => {
   comments.classList.add('display-none');
 
   const bntNote = document.createElement('button');
+  const bntEdit = document.createElement('button');
+  bntEdit.textContent = 'Edit Comment';
+  bntEdit.classList.add('display-none');
 
   getComments('comments').then(({ data }) => {
     if (data) {
       comments.innerHTML = `<span> Comments: </span> ${data}`;
       textarea.value = data;
-      bntNote.textContent = 'View Note';
+      bntNote.textContent = 'View Comment';
     } else {
-      bntNote.textContent = 'Add Note';
+      bntNote.textContent = 'Add Comment';
       textarea.classList.remove('display-none');
     }
   });
@@ -97,27 +100,34 @@ const createNoteInput = (div) => {
     const element = e.target;
     const InputElem = element.previousElementSibling.previousElementSibling;
     const InputValue = InputElem.value;
-    if (element.textContent === 'Add Note') {
+    if (element.textContent === 'Add Comment') {
       if (InputValue) {
         setSearchMovie('comments', InputValue);
         InputElem.classList.add('display-none');
-        element.textContent = 'View Note';
+        element.textContent = 'View Comment';
         // eslint-disable-next-line no-restricted-globals
         location.reload();
       } else {
         InputElem.placeholder = 'Input is missing?';
         InputElem.classList.add('red-input');
       }
-    } else if (element.textContent === 'View Note') {
+    } else if (element.textContent === 'View Comment') {
       comments.classList.remove('display-none');
-      element.textContent = 'Edit Note';
+      element.textContent = 'Hide Comment';
+      bntEdit.classList.remove('display-none');
+      bntEdit.addEventListener('click', () => {
+        InputElem.classList.remove('display-none');
+        comments.classList.add('display-none');
+        element.textContent = 'Add Comment';
+        bntEdit.classList.add('display-none');
+      });
     } else {
-      InputElem.classList.remove('display-none');
+      bntEdit.classList.add('display-none');
       comments.classList.add('display-none');
-      element.textContent = 'Add Note';
+      element.textContent = 'View Comment';
     }
   });
-  noteDiv.append(textarea, comments, bntNote);
+  noteDiv.append(textarea, comments, bntNote, bntEdit);
   div.append(noteDiv);
 };
 

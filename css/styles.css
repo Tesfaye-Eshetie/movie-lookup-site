@@ -201,11 +201,13 @@ select > option {
 }
 .display-note {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
   margin: 1.5rem auto;
+  max-width: 40rem;
 }
 .display-note textarea {
   cursor: pointer;
@@ -250,6 +252,6 @@ select > option {
     width: 80vw;
   }
   .display-note textarea, .display-note p {
-    width: 18rem;
+    width: 24rem;
   }
 }
