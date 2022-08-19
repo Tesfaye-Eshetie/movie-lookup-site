@@ -40,6 +40,7 @@ const createFavButton = (div, data) => {
   const bntFav = document.createElement('button');
   bntFav.textContent = 'add to fav';
   bntFav.classList.add('fav-button');
+  bntFav.classList.add('green-button');
   bntFav.addEventListener('click', ({ target }) => {
     if (target.textContent === 'add to fav') {
       setFavMovie(data.imdbID, data);
@@ -83,6 +84,7 @@ const createNoteInput = (div) => {
   const bntNote = document.createElement('button');
   const bntEdit = document.createElement('button');
   bntEdit.textContent = 'Edit Comment';
+  bntEdit.classList.add('yellow-button');
   bntEdit.classList.add('display-none');
 
   getComments('comments').then(({ data }) => {

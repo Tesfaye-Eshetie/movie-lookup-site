@@ -235,11 +235,21 @@ select > option {
 .display-note .display-none {
   display: none;
 }
-.red-button {
-  background-color: #ff3860;
-  border-color: #ff3860;
+.green-button {
+  background-color: #27ae60;
+  border-color: #27ae60;
 }
-
+.red-button {
+  background-color: #ec4c6c;
+  border-color: #ec4c6c;
+}
+.yellow-button {
+  background-color: #e08a27;
+  border-color: #e08a27;
+}
+#contact {
+margin-left: -2rem;
+}
 @media (max-width: 50rem) {
   #header h1 {
     font-size: 2rem;

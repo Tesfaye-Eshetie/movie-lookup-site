@@ -92,7 +92,7 @@ template.innerHTML = `
             <p><span>E-Mail:</span> tesfayeeshetie19@gmail.com</p>
             <p><span>Phone:</span> +1 804-968-9428</p>
             <p><span>Residence:</span> North Carolina, USA</p>
-            <p><span>Residence:</span> <a
+            <p><span>Portfolio URL:</span> <a
             href="https://www.tesfayeeshetie.com/"
             target="blank"
             >tesfayeeshetie.com</a></p>
