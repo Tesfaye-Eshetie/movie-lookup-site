@@ -7,21 +7,18 @@ export const database = openDB('myDB', 1, {
   },
 });
 
-export async function setSearchMovie(key, data) {
-  return (await database).put('searchMovie', { data }, key);
-}
+export const setSearchMovie = async (key, data) =>
+  (await database).put('searchMovie', data, key);
 
-export async function setFavMovie(key, data) {
-  return (await database).put('favoriteMovie', { data }, key);
-}
+export const setFavMovie = async (key, data) =>
+  (await database).put('favoriteMovie', { data }, key);
 
-export async function getComments(key) {
-  return (await database).get('searchMovie', key);
-}
+export const getComments = async (key) =>
+  (await database).get('searchMovie', key);
 
 const createMovieDisplay = (div, data) => {
   const movie = document.createElement('display-movie');
-
+  console.log(data);
   movie.setAttribute('poster', data.Poster);
   movie.setAttribute('title', data.Title);
   movie.setAttribute('year', data.Year);
@@ -64,9 +61,7 @@ const removeFav = (div, key) => {
 
   bntFav.addEventListener('click', async () => {
     (await database).delete('favoriteMovie', key);
-
-    // eslint-disable-next-line no-restricted-globals
-    location.reload();
+    window.location.reload();
   });
 };
 
@@ -87,7 +82,7 @@ const createNoteInput = (div) => {
   bntEdit.classList.add('yellow-button');
   bntEdit.classList.add('display-none');
 
-  getComments('comments').then(({ data }) => {
+  getComments('comments').then((data) => {
     if (data) {
       comments.innerHTML = `<span> Comments: </span> ${data}`;
       textarea.value = data;
@@ -107,8 +102,7 @@ const createNoteInput = (div) => {
         setSearchMovie('comments', InputValue);
         InputElem.classList.add('display-none');
         element.textContent = 'View Comment';
-        // eslint-disable-next-line no-restricted-globals
-        location.reload();
+        window.location.reload();
       } else {
         InputElem.placeholder = 'Input is missing?';
         InputElem.classList.add('red-input');
@@ -134,8 +128,9 @@ const createNoteInput = (div) => {
 };
 
 export const getSearchMovie = async (con) => {
-  (await database).get('searchMovie', 'search').then(({ data }) => {
-    if (data) {
+  (await database).get('searchMovie', 'search').then(({ search }) => {
+    if (search) {
+      const { data } = search;
       const displayDiv = document.createElement('div');
       displayDiv.classList.add('display-div');
 
@@ -148,10 +143,9 @@ export const getSearchMovie = async (con) => {
   });
 };
 
-export async function getFavMovie(con) {
+export const getFavMovie = async (con) => {
   (await database).getAll('favoriteMovie').then((res) => {
     if (res.length) {
-      // eslint-disable-next-line no-plusplus
       for (let i = 0; i < res.length; i++) {
         const displayDiv = document.createElement('div');
         displayDiv.classList.add('display-div');
@@ -164,4 +158,4 @@ export async function getFavMovie(con) {
       }
     }
   });
-}
+};
