@@ -1,6 +1,7 @@
-import { API_URL, IMG_PATH } from './api-key';
-
 const AllMovies = document.getElementById('main-page');
+
+const BASE_URL = import.meta.env.VITE_API_URL;
+const POSTER_PATH = import.meta.env.VITE_IMG_PATH;
 
 function getClassByRate(vote) {
   if (vote >= 8) {
@@ -18,7 +19,7 @@ const showMovies = (movies) => {
     movieEl.classList.add('movie');
 
     movieEl.innerHTML = `
-          <img src="${IMG_PATH + movie.poster_path}" alt="${movie.title}">
+          <img src="${POSTER_PATH + movie.poster_path}" alt="${movie.title}">
           <div class="movie-info">
               <h3>${movie.title}</h3>
               <span class="${getClassByRate(movie.vote_average)}">${
@@ -44,4 +45,4 @@ const getMovies = async (url) => {
   }
 };
 
-getMovies(API_URL);
+getMovies(BASE_URL);

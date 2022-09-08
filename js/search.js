@@ -1,8 +1,8 @@
-import { APIKey } from './api-key';
 import { setError, setSuccess, setNoResult } from './formValidation';
 import { getSearchMovie, setSearchMovie } from './idb/indexedDB';
 import { store } from './idb/store';
 
+const APIKey = import.meta.env.VITE_APIKey;
 const baseURL = 'https://www.omdbapi.com/';
 const formTitle = document.getElementById('form-title');
 const title = document.getElementById('title');
