@@ -248,7 +248,7 @@ select > option {
   border-color: #e08a27;
 }
 #contact {
-margin-left: -2rem;
+  margin-left: -2rem;
 }
 @media (max-width: 50rem) {
   #header h1 {
@@ -261,7 +261,8 @@ margin-left: -2rem;
   .form {
     width: 80vw;
   }
-  .display-note textarea, .display-note p {
+  .display-note textarea,
+  .display-note p {
     width: 24rem;
   }
 }
