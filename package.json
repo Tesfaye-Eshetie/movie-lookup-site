@@ -20,5 +20,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "2.7.1",
     "vite": "^2.9.13"
+  },
+  "dependencies": {
+    "idb": "^7.0.2"
   }
 }
