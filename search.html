@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+    <script defer type="module" src="./js/index.js"></script>
+    <script defer type="module" src="./js/search.js"></script>
+    <title>Tesfaye's Movie-Lookup-Site</title>
+  </head>
+  <body>
+    <nav-bar></nav-bar>
+    <header id="header">
+      <h1>Movies Lookup Site</h1>
+    </header>
+    <section class="form-container">
+      <form id="form-title" class="form" action="/">
+        <fieldset>
+          <legend>By Title</legend>
+          <div class="input-control">
+            <div class="input-flex">
+              <label for="title" class="label">Title:</label>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Title of the movie..."
+              />
+            </div>
+            <div class="error"></div>
+          </div>
+          <div class="input-control">
+            <div class="input-flex">
+              <label for="year" class="label">Year:</label>
+              <input
+                id="year"
+                name="year"
+                type="number"
+                min="1928"
+                max="2022"
+                placeholder="Year..."
+              />
+            </div>
+            <div class="error"></div>
+          </div>
+          <div class="input-control">
+            <div id="input-flex">
+              <label for="plot-title" class="label">Plot:</label>
+              <select id="plot-title">
+                <option value="Short" selected>Short</option>
+                <option value="Full">Full</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit">Search</button>
+        </fieldset>
+      </form>
+      <form id="form-ID" class="form" action="">
+        <fieldset>
+          <legend>BY IMDB-ID</legend>
+          <div class="input-control">
+            <div class="input-flex">
+              <label for="IMDB_ID" class="label">ID:</label>
+              <input
+                id="IMDB_ID"
+                name="IMDB_ID"
+                type="text"
+                placeholder="IMDB ID..."
+              />
+            </div>
+          </div>
+          <div class="input-control">
+            <div id="input-flex">
+              <label for="plot-ID" class="label">Plot:</label>
+              <select id="plot-ID">
+                <option value="Short" selected>Short</option>
+                <option value="Full">Full</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit">Search</button>
+        </fieldset>
+      </form>
+    </section>
+    <section class="display-container" id="display"></section>
+    <contact-page id="contact"></contact-page>
+  </body>
+</html>
